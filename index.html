@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Tập Capstone JS</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <!-- Bootstrap4 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <style>
+        .invalid-input {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Quản Lý Học Viện Nghiên Cứu Và Giảng Dạy</h1>
+    </div>
+
+    <!-- Table -->
+    <div class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <button id="btnThem" class="btn btn-success" data-toggle="modal" data-target="#personModal">
+                        <i class="fa fa-plus mr-1"></i>
+                        Thêm Người dùng Mới
+                    </button>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group row">
+                        <label for="selLoai" class="col-md-2 col-form-label">Lọc</label>
+                        <div class="col-md-8">
+                            <select class="custom-select" id="selLoai">
+                                <option value="all" selected="">Chọn loại</option>
+                                <option value="customer">Customer</option>
+                                <option value="employee">Employee</option>
+                                <option value="student">Student</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group row">
+                        <label for="selHoTen" class="col-md-6 col-form-label">Sắp xếp theo Họ Tên</label>
+                        <div class="col-md-6">
+                            <select class="custom-select" id="selHoTen">
+                                <option selected="">Chọn sắp xếp</option>
+                                <option value="tang">Tăng dần</option>
+                                <option value="giam">Giảm dần</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="page-header">
+                        <h1 id="tables">Danh sách Người dùng</h1>
+                    </div>
+
+                    <div class="bs-component">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Mã</th>
+                                    <th scope="col">Họ tên</th>
+                                    <th scope="col">Địa chỉ</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Loai</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblDSPerson">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Person Modal -->
+        <div class="modal fade" id="personModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Thêm mới Người dùng</h4>
+                        <button type="button" class="close" data-dismiss="modal">
+                            &times;
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Mã</label>
+                            <input id="ma" class="form-control" placeholder="Nhập mã" />
+                            <div id="invalidMa" class="invalid-feedback invalid-input"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Họ tên</label>
+                            <input type="text" id="hoTen" class="form-control" placeholder="Nhập họ tên" />
+                            <div id="invalidHoTen" class="invalid-feedback invalid-input"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Địa chỉ</label>
+                            <input type="text" id="diaChi" class="form-control" placeholder="Nhập địa chỉ" />
+                            <div id="invalidDiaChi" class="invalid-feedback invalid-input"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" id="email" class="form-control" placeholder="Nhập email" />
+                            <div id="invalidEmail" class="invalid-feedback invalid-input"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="loai">Loại người dùng</label>
+                            <select class="custom-select d-block w-100" id="loai" required>
+                                <option value="">Chọn loại</option>
+                                <option value="customer">Customer</option>
+                                <option value="employee">Employee</option>
+                                <option value="student">Student</option>
+                            </select>
+                            <div id="invalidLoai" class="invalid-feedback invalid-input"></div>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-warning" id="btnCapNhatNguoiDung">Cập Nhật Người Dùng</button>
+                        <button type="button" class="btn btn-success" id="btnThemNguoiDung">Thêm Người Dùng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Jquery Min JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+
+    <!-- Bootstrap4 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
+    </script>
+
+    <!-- Custom JS -->
+    <script type="module" src="./main.js"></script>
+</body>
+
+</html>
